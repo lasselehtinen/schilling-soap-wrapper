@@ -108,7 +108,7 @@ class SchillingSoapWrapper
     {
         $dom = new DOMDocument();
         $dom->formatOutput = true;
-        $dom->preserveWhitespace = false;
+        $dom->preserveWhiteSpace = false;
         $dom->loadXml($xml);
 
         return $dom->saveXml();
