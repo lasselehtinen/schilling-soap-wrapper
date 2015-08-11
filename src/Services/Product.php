@@ -4,6 +4,11 @@ use LasseLehtinen\SchillingSoapWrapper\SchillingSoapWrapper;
 
 class Product extends SchillingSoapWrapper
 {
+    /**
+     * getProducts
+     * @param  array $arguments
+     * @return array
+     */
     public function getProducts($arguments)
     {
         $query = ['ProductCriteria' => $arguments];

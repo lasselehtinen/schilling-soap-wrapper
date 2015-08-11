@@ -4,6 +4,11 @@ use LasseLehtinen\SchillingSoapWrapper\SchillingSoapWrapper;
 
 class Project extends SchillingSoapWrapper
 {
+    /**
+     * getProjects
+     * @param  array $arguments
+     * @return array
+     */
     public function getProjects($arguments)
     {
         $query = ['WdProjectCriteria' => $arguments];

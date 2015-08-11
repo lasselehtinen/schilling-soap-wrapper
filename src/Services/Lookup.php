@@ -4,6 +4,11 @@ use LasseLehtinen\SchillingSoapWrapper\SchillingSoapWrapper;
 
 class Lookup extends SchillingSoapWrapper
 {
+    /**
+     * Lookup
+     * @param  array $arguments
+     * @return array
+     */
     public function lookup($arguments)
     {
         $query = ['Criteria' => $arguments];

@@ -12,6 +12,14 @@ class SchillingSoapWrapper
     private $password;
     private $company;
 
+    /**
+     * Constructor
+     * @param string $hostname
+     * @param int $port
+     * @param string $username
+     * @param string $password
+     * @param int $company
+     */
     public function __construct($hostname, $port, $username, $password, $company)
     {
         $this->hostname = $hostname;
@@ -21,6 +29,14 @@ class SchillingSoapWrapper
         $this->company = $company;
     }
 
+    /**
+     * Forms and send a Web Service request to Schilling
+     * @param  string $class
+     * @param  string $service
+     * @param  String $method
+     * @param  array  $arguments
+     * @return array
+     */
     public function request($class, $service, $method, $arguments = array())
     {
         // Get WSDL URL
@@ -37,6 +53,10 @@ class SchillingSoapWrapper
         return $result->ReturnValue;
     }
 
+    /**
+     * Adds authentication information to the Web Service query
+     * @param array $arguments
+     */
     public function addAuthHeader($arguments)
     {
         $authentication = [
@@ -50,22 +70,40 @@ class SchillingSoapWrapper
         return $query;
     }
 
+    /**
+     * Forms and URI for the WSDL
+     * @param  string $service
+     * @return string
+     */
     public function getWsdlUri($service)
     {
         $wsdl_uri = 'http://'.$this->hostname.':'.$this->port.'/schilling/services/'.$service.'Service?wsdl';
         return $wsdl_uri;
     }
 
+    /**
+     * Returns the last Web Service request as formatted XML
+     * @return string
+     */
     public function getLastRequest()
     {
         return $this->formatXml($this->client->__getLastRequest());
     }
 
+    /**
+     * Returns the last response as formatted XML
+     * @return string
+     */
     public function getLastResponse()
     {
         return $this->formatXml($this->client->__getLastResponse());
     }
 
+    /**
+     * Formats the Web Service query/response XML
+     * @param  string $xml
+     * @return string
+     */
     public function formatXml($xml)
     {
         $dom = new DOMDocument();
