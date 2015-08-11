@@ -1,0 +1,5 @@
+/vendor
+composer.lock
+schilling-soap-wrapper.sublime-project
+schilling-soap-wrapper.sublime-workspace
+/tests/.env
