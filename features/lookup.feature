@@ -1,7 +1,7 @@
 Feature: Lookup
 In order to get certain Lookup values
 As a Schilling Web Service user
-I need to be able to view the homepage
+I need to be able to perform queries to the Web Service
 
   Scenario: Performing a basic domain lookup
     Given I send a Lookup request for domain 26

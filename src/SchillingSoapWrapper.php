@@ -37,7 +37,7 @@ class SchillingSoapWrapper
      * @param  array  $arguments
      * @return array
      */
-    public function request($class, $service, $method, $arguments = array())
+    public function request($class, $service, $method, $arguments = [])
     {
         // Get WSDL URL
         $wsdl_uri = $this->getWsdlUri($class);
