@@ -6,8 +6,8 @@ class Product extends SchillingSoapWrapper
 {
     /**
      * Returns a list of discount information that matches the criteria.
-     * @param  [type] $arguments [description]
-     * @return [type]            [description]
+     * @param  array $arguments
+     * @return array
      */
     public function getDiscountInformation($arguments)
     {
