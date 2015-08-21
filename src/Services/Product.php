@@ -5,7 +5,18 @@ use LasseLehtinen\SchillingSoapWrapper\SchillingSoapWrapper;
 class Product extends SchillingSoapWrapper
 {
     /**
-     * Returns a list of discount information that matches the criteria.
+     * Returns a list of product prices for the given products
+     * @param  array $arguments
+     * @return array
+     */
+    public function getCustomerPrices($arguments)
+    {
+        $query = ['Criteria' => $arguments];
+        return $this->request('Product', 'GetCustomerPrices', 'GetCustomerPricesRequest', $query);
+    }
+
+    /**
+     * Returns a list of discount information that matches the criteria
      * @param  array $arguments
      * @return array
      */
@@ -16,7 +27,7 @@ class Product extends SchillingSoapWrapper
     }
 
     /**
-     * Returns a list of Internet categories.
+     * Returns a list of Internet categories
      * @param  array $arguments
      * @return array
      */
@@ -27,7 +38,7 @@ class Product extends SchillingSoapWrapper
     }
 
     /**
-     * Returns the entire list of Internet categories. Use getInternetCategories you want to use criterias.
+     * Returns the entire list of Internet categories. Use getInternetCategories you want to use criterias
      * @return array
      */
     public function getProductInternetCategories()
@@ -36,7 +47,7 @@ class Product extends SchillingSoapWrapper
     }
 
     /**
-     * Used to retreive one or more products from Schilling.
+     * Used to retreive one or more products from Schilling
      * @param  array $arguments
      * @return array
      */
@@ -44,5 +55,27 @@ class Product extends SchillingSoapWrapper
     {
         $query = ['ProductCriteria' => $arguments];
         return $this->request('Product', 'GetProducts', 'GetProductsRequest', $query);
+    }
+    
+    /**
+     * Used to create or update a product in Schilling
+     * @param  array $arguments
+     * @return array
+     */
+    public function saveProduct($arguments)
+    {
+        $query = ['ProductData' => $arguments];
+        return $this->request('Product', 'SaveProduct', 'SaveProductRequest', $query);
+    }
+
+    /**
+     * Used to create or update a product in Schilling. The method returns the new product inferface.
+     * @param  array $arguments
+     * @return array
+     */
+    public function saveProductWithReturnData($arguments)
+    {
+        $query = ['ProductData' => $arguments];
+        return $this->request('Product', 'SaveProductWithReturnData', 'SaveProductWithReturnDataRequest', $query);
     }
 }

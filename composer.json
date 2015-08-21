@@ -7,10 +7,10 @@
             "email": "lasse.lehtinen@iki.fi"
         }
     ],
+    "license": "GPL-2.0",
     "require": {
         "php": ">=5.5.9",        
-        "ext-soap": "*",
-        
+        "ext-soap": "*"        
     },
     "require-dev": {
         "phpunit/phpunit": "~4.0",

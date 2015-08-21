@@ -22,7 +22,8 @@ class FeatureContext implements Context, SnippetAcceptingContext
     // Random values like product numbers etc.
     private $product_number;
     private $internet_category_id;
-
+    private $debtor_number;
+    private $new_product_number;
     /**
      * Initializes context.
      *
@@ -173,5 +174,83 @@ class FeatureContext implements Context, SnippetAcceptingContext
     public function thenSendAQueryForDiscountInformation()
     {
         $this->response = $this->product->getDiscountInformation(['ProductNumber' => $this->product_number]);
+    }
+
+
+    /**
+     * @Given I have a random customer number
+     */
+    public function iHaveARandomCustomerNumber()
+    {
+        $this->iSendALookupRequestForDomain(5);
+        PHPUnit::assertInternalType('array', $this->response);
+
+        $random_key = array_rand($this->response);
+        $random_debtor = $this->response[$random_key];
+        $this->debtor_number = $random_debtor->KeyValue;
+
+        PHPUnit::assertInternalType('string', $this->debtor_number);
+    }
+
+    /**
+     * @Given then send a query for customer prices for the product
+     */
+    public function thenSendAQueryForCustomerPricesForTheProduct()
+    {
+        $this->response = $this->product->getCustomerPrices(['DebtorNumber' => $this->debtor_number, 'ProductNumbers' => $this->product_number]);
+    }
+
+    /**
+     * @Given that I have have template product :template_product
+     */
+    public function thatIHaveHaveTemplateProduct($template_product)
+    {
+        $this->response = $this->lookup->lookup(['DomainNumber' => 7, 'KeyValue' => $template_product]);
+        PHPUnit::assertEquals($template_product, $this->response->KeyValue);
+    }
+
+    /**
+     * @Given that I create a new product number
+     */
+    public function thatICreateANewProductNumber()
+    {
+        $this->new_product_number = substr(str_shuffle('0123456789abcdefghijklmnopqrstuvwxyz'), 0, 16);
+        PHPUnit::assertInternalType('string', $this->new_product_number);
+    }
+
+    /**
+     * @Then send a query to create a product
+     */
+    public function sendAQueryToCreateAProduct()
+    {
+        // Get random existing supplier
+        $supplier = $this->lookup->lookup(['DomainNumber' => 127]);
+        $random_supplier = $supplier[array_rand($supplier)];
+
+        // Get random product group
+        $product_group = $this->lookup->lookup(['DomainNumber' => 256]);
+
+        if (is_object($product_group)) {
+            $random_product_group = $product_group;
+        } else {
+            $random_product_group = $product_group[array_rand($product_group)];
+        }
+
+        $this->response = $this->product->saveProductWithReturnData([
+                'Action'            => 1,
+                'ProductText'       => 'Test product - Can be deleted',
+                'ProductNumber'     => $this->new_product_number,
+                'PrimarySupplier'   => $random_supplier->DataValue,
+                'ProductGroup'      => $product_group->KeyValue
+        ]);
+    }
+
+    /**
+     * @Then product in the response should have the new product number as ProductNumber
+     */
+    public function productInTheResponseShouldHaveTheNewProductNumberAsProductnumber()
+    {
+        PHPUnit::assertEquals($this->new_product_number, $this->response->ProductNumber);
+        PHPUnit::assertEquals('Test product - Can be deleted', $this->response->ProductText);
     }
 }

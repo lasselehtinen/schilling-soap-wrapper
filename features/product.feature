@@ -22,3 +22,14 @@ I need to be able to perform queries to the Web Service
     Given I have a random product number
     And then send a query for discount information
     Then the response should have atleast 1 values
+
+  Scenario: Getting discount information for a product
+    Given I have a random product number
+    And I have a random customer number
+    And then send a query for customer prices for the product
+    Then the response should have atleast 1 values
+
+  Scenario: Creating a new product        
+    Given that I create a new product number
+    And send a query to create a product
+    Then product in the response should have the new product number as ProductNumber
