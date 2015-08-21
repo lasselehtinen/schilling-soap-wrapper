@@ -43,7 +43,7 @@ class SchillingSoapWrapper
         $wsdl_uri = $this->getWsdlUri($class);
 
         // Init SOAP client
-        $this->client = new SoapClient($wsdl_uri, ['trace' => true, 'exceptions' => true]);
+        $this->client = new SoapClient($wsdl_uri, ['trace' => true, 'exceptions' => true, 'cache_wsdl' => WSDL_CACHE_MEMORY]);
         
         // Add authentication to the query
         $request = $this->addAuthHeader($arguments);
