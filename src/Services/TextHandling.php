@@ -17,7 +17,7 @@ class TextHandling extends SchillingSoapWrapper
 
     public function saveTextHandlings($arguments)
     {
-        $query = ['TextHandlingCriteria' => $arguments];
+        $query = ['TextHandlingData' => $arguments];
         return $this->request('TextHandling', 'SaveTextHandlings', 'SaveTextHandlingsReturn', $query);
-    }    
+    }
 }
