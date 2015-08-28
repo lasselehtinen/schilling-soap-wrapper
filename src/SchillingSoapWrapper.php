@@ -50,7 +50,11 @@ class SchillingSoapWrapper
 
         $result = $this->client->__soapcall($service, array($method => $request));
 
-        return $result->ReturnValue;
+        if (!isset($result->ReturnValue)) {
+            return null;
+        } else {
+            return $result->ReturnValue;
+        }
     }
 
     /**
