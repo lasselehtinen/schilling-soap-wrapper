@@ -53,7 +53,12 @@ class SchillingSoapWrapper
         if (!isset($result->ReturnValue)) {
             return null;
         } else {
-            return $result->ReturnValue;
+            // If more than one, return all return values
+            if (count($result->ReturnValue) > 1) {
+                return $result;
+            } else {
+                return $result->ReturnValue;
+            }
         }
     }
 
