@@ -11,7 +11,7 @@ class Order extends SchillingSoapWrapper
      */
     public function getOrders($arguments)
     {
-        $query = ['TheCriteria' => $arguments];
+        $query = ['OrderCriteria' => $arguments];
         return $this->request('Order', 'GetOrders', 'GetOrdersRequest', $query);
     }
 }
