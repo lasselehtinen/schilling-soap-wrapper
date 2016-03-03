@@ -22,7 +22,7 @@ class Project extends SchillingSoapWrapper
      */
     public function saveProjects($arguments)
     {
-        $query = ['Project' => $arguments];
+        $query = ['WdProject' => $arguments];
         return $this->request('Project', 'SaveProjects', 'SaveProjectsRequest', $query);
     }
 }
