@@ -6,7 +6,7 @@ class ProjectHierarchy extends SchillingSoapWrapper
 {
     /**
      * Returns related products to the ProductNumber
-     * @param  array $arguments
+     * @param  string $productNumber
      * @return array
      */
     public function getRelatedProductsByProductNumber($productNumber)
@@ -17,10 +17,10 @@ class ProjectHierarchy extends SchillingSoapWrapper
 
     /**
      * Returns the title hierarchy that ProjectNumber belongs to
-     * @param  array $arguments
+     * @param  string $projectNumber
      * @return array
      */
-    public function GetTitleHierarchyByProjectNumber($projectNumber)
+    public function getTitleHierarchyByProjectNumber($projectNumber)
     {
         $query = ['ProjectNumber' => $projectNumber];
         return $this->request('ProjectHierarchy', 'GetTitleHierarchyByProjectNumber', 'GetTitleHierarchyByProjectNumberRequest', $query);
