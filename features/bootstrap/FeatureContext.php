@@ -1,13 +1,10 @@
 <?php
 
-use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
-use Behat\Gherkin\Node\PyStringNode;
-use Behat\Gherkin\Node\TableNode;
-use PHPUnit_Framework_Assert as PHPUnit;
 use LasseLehtinen\SchillingSoapWrapper\Services\Lookup;
 use LasseLehtinen\SchillingSoapWrapper\Services\Product;
+use PHPUnit_Framework_Assert as PHPUnit;
 
 /**
  * Defines application features from the specific context.
@@ -73,7 +70,7 @@ class FeatureContext implements Context, SnippetAcceptingContext
         PHPUNit::assertGreaterThanOrEqual($amount, count($this->response));
     }
 
-     /**
+    /**
      * @Then the request should throw an exception that contains message :content
      */
     public function theRequestShouldThrowAnExceptionThatContainsMessage($content)
@@ -99,12 +96,12 @@ class FeatureContext implements Context, SnippetAcceptingContext
     public function iHaveARandomProductNumber()
     {
         $this->iSendALookupRequestForDomain(7);
-        PHPUnit::assertInternalType('array', $this->response);
+        PHPUnit::assertInternalType('array', $this->response->ReturnValue);
 
-        $random_key = array_rand($this->response);
-        $random_product = $this->response[$random_key];
+        $random_key = array_rand($this->response->ReturnValue);
+        $random_product = $this->response->ReturnValue[$random_key];
         $this->product_number = $random_product->KeyValue;
-        
+
         PHPUnit::assertInternalType('string', $this->product_number);
     }
 
@@ -147,8 +144,8 @@ class FeatureContext implements Context, SnippetAcceptingContext
     public function iHaveARandomInternetCategoryId()
     {
         $this->response = $this->product->getProductInternetCategories();
-        $random_key = array_rand($this->response);
-        $random_internet_category_id = $this->response[$random_key];
+        $random_key = array_rand($this->response->ReturnValue);
+        $random_internet_category_id = $this->response->ReturnValue[$random_key];
         $this->internet_category_id = $random_internet_category_id->CategoryId;
     }
 
@@ -176,17 +173,16 @@ class FeatureContext implements Context, SnippetAcceptingContext
         $this->response = $this->product->getDiscountInformation(['ProductNumber' => $this->product_number]);
     }
 
-
     /**
      * @Given I have a random customer number
      */
     public function iHaveARandomCustomerNumber()
     {
         $this->iSendALookupRequestForDomain(5);
-        PHPUnit::assertInternalType('array', $this->response);
+        PHPUnit::assertInternalType('array', $this->response->ReturnValue);
 
-        $random_key = array_rand($this->response);
-        $random_debtor = $this->response[$random_key];
+        $random_key = array_rand($this->response->ReturnValue);
+        $random_debtor = $this->response->ReturnValue[$random_key];
         $this->debtor_number = $random_debtor->KeyValue;
 
         PHPUnit::assertInternalType('string', $this->debtor_number);
@@ -225,7 +221,9 @@ class FeatureContext implements Context, SnippetAcceptingContext
     {
         // Get random existing supplier
         $supplier = $this->lookup->lookup(['DomainNumber' => 127]);
-        $random_supplier = $supplier[array_rand($supplier)];
+
+        $random_supplier_key = array_rand($supplier->ReturnValue);
+        $random_supplier = $supplier->ReturnValue[$random_supplier_key];
 
         // Get random product group
         $product_group = $this->lookup->lookup(['DomainNumber' => 256]);
@@ -237,11 +235,11 @@ class FeatureContext implements Context, SnippetAcceptingContext
         }
 
         $this->response = $this->product->saveProductWithReturnData([
-                'Action'            => 1,
-                'ProductText'       => 'Test product - Can be deleted',
-                'ProductNumber'     => $this->new_product_number,
-                'PrimarySupplier'   => $random_supplier->DataValue,
-                'ProductGroup'      => $product_group->KeyValue
+            'Action' => 1,
+            'ProductText' => 'Test product - Can be deleted',
+            'ProductNumber' => $this->new_product_number,
+            'PrimarySupplier' => $random_supplier->DataValue,
+            'ProductGroup' => $product_group->KeyValue,
         ]);
     }
 
