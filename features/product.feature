@@ -23,7 +23,7 @@ I need to be able to perform queries to the Web Service
     And then send a query for discount information
     Then the response should have atleast 1 values
 
-  Scenario: Getting discount information for a product
+  Scenario: Getting discount information for a certain customer and product combination
     Given I have a random product number
     And I have a random customer number
     And then send a query for customer prices for the product
@@ -33,3 +33,7 @@ I need to be able to perform queries to the Web Service
     Given that I create a new product number
     And send a query to create a product
     Then product in the response should have the new product number as ProductNumber
+
+  Scenario: Finding a product with one stakeholder        
+    Given that I have a product with one stakeholder
+    Then product stakeholders are an array
