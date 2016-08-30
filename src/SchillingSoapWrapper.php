@@ -52,7 +52,7 @@ class SchillingSoapWrapper
             'features' => SOAP_SINGLE_ELEMENT_ARRAYS,
             'trace' => true,
             'exceptions' => true,
-            'cache_wsdl' => 0,
+            'cache_wsdl' => WSDL_CACHE_MEMORY,
         ]);
 
         // Add authentication to the query
@@ -99,7 +99,7 @@ class SchillingSoapWrapper
      */
     public function getWsdlUri($service)
     {
-        $wsdl = 'http://'.$this->hostname.':'.$this->port.'/schilling/services/'.$service.'Service?wsdl';
+        $wsdl = 'http://' . $this->hostname . ':' . $this->port . '/schilling/services/' . $service . 'Service?wsdl';
 
         return $wsdl;
     }
