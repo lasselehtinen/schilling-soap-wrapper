@@ -64,7 +64,7 @@ class SchillingSoapWrapper
             return;
         } else {
             // If more than one, return all return values
-            if (count($result->ReturnValue) > 1) {
+            if (is_array($result->ReturnValue) && count($result->ReturnValue) > 1) {
                 return $result;
             } else {
                 return $result->ReturnValue;
